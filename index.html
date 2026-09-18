@@ -13,7 +13,7 @@ html,body{overscroll-behavior-y:none}body{padding-top:env(safe-area-inset-top);p
  body{padding-bottom:calc(76px + env(safe-area-inset-bottom));background:#080d19}
  header{min-height:58px;padding:9px 12px;align-items:center} header h1{font-size:16px;letter-spacing:.2px}.tag{display:none}#status{margin-left:auto;font-size:11px;max-width:42%;text-align:right}
  .wrap{padding:8px 8px 14px}.controls{position:sticky;top:58px;z-index:18;background:rgba(8,13,25,.96);margin:0 -8px 8px;padding:8px;grid-template-columns:1fr 76px 44px;box-shadow:0 6px 18px rgba(0,0,0,.18)}
- .controls #symbolSearch{display:none}.controls #symbol{grid-column:auto}.controls #bar{width:76px}.controls #refresh{font-size:0;padding:8px}.controls #refresh:after{content:'↻';font-size:20px}.controls #scan{display:none}
+ .controls #symbolSearch{display:block;grid-column:1/-1;min-height:44px;font-size:16px}.controls #symbol{grid-column:auto}.controls #bar{width:76px}.controls #refresh{font-size:0;padding:8px}.controls #refresh:after{content:'↻';font-size:20px}.controls #scan{display:none}
  .card{border-radius:14px;padding:12px}.mobile-hidden{display:none!important}.mobile-page{display:none!important}.mobile-page.mobile-active{display:block!important}.grid>.mobile-page.mobile-active{display:block!important}
  #majorSection{margin-bottom:8px!important}.majorbar{gap:7px}.majorcard{flex:0 0 132px;padding:10px}.majorname{font-size:13px}.majorprice{font-size:15px}.majorinfo{font-size:11px}
  #radarSection{margin-top:8px}.radarWrap{overflow:visible}.radar{min-width:0;table-layout:fixed}.radar th,.radar td{font-size:11px;padding:9px 5px}.radar th:nth-child(3),.radar td:nth-child(3),.radar th:nth-child(4),.radar td:nth-child(4),.radar th:nth-child(5),.radar td:nth-child(5),.radar th:nth-child(6),.radar td:nth-child(6),.radar th:nth-child(7),.radar td:nth-child(7){display:none}.radar th:nth-child(1){width:25%}.radar th:nth-child(2){width:32%}.radar th:nth-child(8){width:16%}.radar th:nth-child(9){width:27%}
@@ -21,8 +21,9 @@ html,body{overscroll-behavior-y:none}body{padding-top:env(safe-area-inset-top);p
  #chartSection{padding:8px}#chartSection>.label{padding:4px 4px 8px}canvas{height:58vh;min-height:420px;border-radius:10px}#chartSection .small{font-size:10px;line-height:1.45}
  #positionSection{padding:10px}.posbox{border:0;background:transparent;padding:0}.formgrid{grid-template-columns:1fr 1fr;gap:8px}.formgrid label{font-size:11px}.formgrid input,.formgrid select{font-size:16px;min-height:44px;padding:9px}.actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.actions button{min-width:0;min-height:46px;font-weight:700}.metricgrid{grid-template-columns:1fr 1fr}.metric{padding:9px}.metric .value{font-size:18px}
  .iosnav{grid-template-columns:repeat(4,1fr);padding-top:5px}.iosnav button{min-height:51px;border-radius:10px}.iosnav button.active{background:#1a2744;color:#fff}.iosnav button.active b{color:#7fb0ff}
+ body.holding-mode #positionSection .formgrid,body.holding-mode #positionSection #modeHelp,body.holding-mode #positionSection .actions,body.holding-mode #positionSection #preTradePlan,body.holding-mode #positionSection #preTradeAlert,body.holding-mode #positionSection>.label,body.holding-mode #positionSection .posbox>.small:last-child{display:none!important}
 }
-</style></head><body><header><div><h1>DATA HUNTER V4.1 — Mobile Trading Dashboard</h1><div class="tag">iPhone 優化・OKX USDT 永續・五大主流監控・雙風控・獨立持倉</div></div><div id="status" class="status">準備中</div></header>
+</style></head><body><header><div><h1>DATA HUNTER V4.4 — Mobile Trading Dashboard</h1><div class="tag">iPhone 優化・OKX USDT 永續・五大主流監控・雙風控・獨立持倉</div></div><div id="status" class="status">準備中</div></header>
 <div class="wrap"><div class="controls"><input id="symbolSearch" placeholder="搜尋幣種，例如 TRUMP / BTC" style="width:220px"><select id="symbol"><option>BTC-USDT-SWAP</option></select><select id="bar"><option value="5m">5m</option><option value="15m">15m</option><option value="1H" selected>1H</option><option value="4H">4H</option></select><button id="refresh">重新整理</button><button id="scan">掃描市場</button></div>
 <div id="majorSection" class="card" style="margin-bottom:14px"><div class="label">五大主流幣即時監控｜點卡片只切換分析，不會改變已建立持倉</div><div id="majorWatch" class="majorbar" style="margin-top:10px;margin-bottom:0"></div></div>
 <div id="error" class="err"></div><div class="grid">
@@ -31,11 +32,30 @@ html,body{overscroll-behavior-y:none}body{padding-top:env(safe-area-inset-top);p
 <div class="card wide"><div class="label">可解釋訊號</div><div id="signal" class="signal neutral">—</div><ul id="reasons"></ul></div><div class="card wide"><div class="label">交易結構摘要</div><div id="summary" style="margin-top:8px;line-height:1.7;color:#cbd5eb">—</div></div>
 <div class="card wide"><div class="label">多週期共振</div><div id="mtf" style="margin-top:8px;line-height:1.8">—</div></div><div class="card wide"><div class="label">Funding / OI 風險</div><div id="riskbox" style="margin-top:8px;line-height:1.8">—</div></div>
 <div class="card full"><div class="label">自動進場判定（系統幫你看 K 線，不需自行判斷「站穩」）</div><div class="triggerbox"><div id="tradeState" class="triggerTitle neutral">⏳ 計算中</div><div id="triggerChecks" style="margin-top:8px">—</div><div class="small" id="signalTime" style="margin-top:10px">—</div></div><div class="plan"><div><div class="small">參考進場區</div><b id="entry">—</b></div><div><div class="small">停損 SL</div><b id="stop">—</b></div><div><div class="small">止盈 TP1</div><b id="tp1">—</b></div><div><div class="small">止盈 TP2 / R:R</div><b id="tp2">—</b></div></div><div class="small" style="margin-top:8px">觸發規則以「已收盤的 5m K」判定，不使用尚未收完的 K 棒。訊號是規則化市場結構提示，不代表獲利保證。</div></div>
-<div id="positionSection" class="card full"><div class="label">進場計畫 / 手動持倉追蹤</div><div class="posbox"><div id="positionState" class="triggerTitle neutral">尚未建立持倉</div><div id="positionSymbol" class="possymbol">尚未鎖定幣種</div><div class="formgrid"><label class="small">風控模式<select id="riskMode"><option value="fixed">固定倉位模式</option><option value="pro">專業風控模式</option></select></label><label class="small">方向<select id="posSide"><option value="long">LONG 做多</option><option value="short">SHORT 做空</option></select></label><label class="small">預計 / 實際成交價<input id="posEntry" type="number" step="any" placeholder="可用目前價"></label><label class="small" id="marginLabel">本次投入保證金 USDT<input id="accountEquity" type="number" step="any" value="100"></label><label class="small">最大願意虧損 USDT（1R）<input id="maxLoss" type="number" step="any" value="5"></label><label class="small">槓桿<input id="leverage" type="number" min="1" max="125" value="20"></label><label class="small" id="manualTechWrap" style="display:none">技術 SL（可手動覆寫）<input id="manualTechSL" type="number" step="any" placeholder="留空＝採系統技術SL"></label><label class="small" id="actualMarginWrap" style="display:none">實際投入保證金 USDT<input id="actualMargin" type="number" step="any" placeholder="計畫後自動帶入，可自行修改"></label></div><div id="modeHelp" class="small" style="margin-top:8px">固定倉位：投入保證金 × 槓桿決定名義倉位，再反推 -1R 資金SL。</div><div class="actions"><button id="useLive">帶入目前價</button><button id="calcPlan">先計算進場計畫</button><button id="enterPosition">我已進場・開始追蹤</button><button id="closePosition">結束持倉</button></div><div id="preTradePlan" class="metricgrid" style="margin-top:10px"></div><div id="preTradeAlert"></div><div id="positionMetrics" class="metricgrid"></div><div id="riskAlert"></div><div class="small" style="margin-top:8px">先看「進場計畫」再下單。固定投入模式：你指定投入保證金＋槓桿＋1R，系統反推資金SL。專業風控模式：技術SL＋1R反推最大名義倉位；槓桿只顯示最低初始保證金需求與安全檢查。建立持倉後幣種鎖定；即時U盈虧、ROE皆未扣手續費、滑價與資金費。</div></div></div>
+<div id="positionSection" class="card full"><div class="label">交易｜先確認目前幣種狀況，再建立進場計畫</div>
+<div id="tradeContext" class="posbox" style="margin-bottom:10px">
+  <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap">
+    <div><div class="small">目前準備交易</div><div id="tradeCtxSymbol" class="possymbol">—</div></div>
+    <div style="text-align:right"><div class="small">LIVE</div><div id="tradeCtxPrice" class="value">—</div></div>
+  </div>
+  <div class="metricgrid" style="margin-top:8px">
+    <div><div class="small">方向 / Score</div><b id="tradeCtxSignal">—</b></div>
+    <div><div class="small">進場判定</div><b id="tradeCtxState">—</b></div>
+  </div>
+  <div id="tradeCtxChecks" class="triggerbox" style="margin-top:8px">—</div>
+  <div class="plan" style="margin-top:8px">
+    <div><div class="small">參考進場區</div><b id="tradeCtxEntry">—</b></div>
+    <div><div class="small">技術 SL</div><b id="tradeCtxStop">—</b></div>
+    <div><div class="small">TP1</div><b id="tradeCtxTp1">—</b></div>
+    <div><div class="small">TP2</div><b id="tradeCtxTp2">—</b></div>
+  </div>
+  <div class="small" style="margin-top:8px">交易頁會同步目前分析幣種的方向與「已收盤 5m K」進場判定。LONG / SHORT 只是方向；只有顯示「進場條件已觸發」才代表 Trigger 已成立，仍需再確認風控與實際成交價。</div>
+</div>
+<div class="label">進場計畫 / 手動持倉追蹤</div><div class="posbox"><div id="positionState" class="triggerTitle neutral">尚未建立持倉</div><div id="positionSymbol" class="possymbol">尚未鎖定幣種</div><div class="formgrid"><label class="small">風控模式<select id="riskMode"><option value="fixed">固定倉位模式</option><option value="pro">專業風控模式</option></select></label><label class="small">方向<select id="posSide"><option value="long">LONG 做多</option><option value="short">SHORT 做空</option></select></label><label class="small">預計 / 實際成交價<input id="posEntry" type="number" step="any" placeholder="可用目前價"></label><label class="small" id="marginLabel">本次投入保證金 USDT<input id="accountEquity" type="number" step="any" value="100"></label><label class="small">最大願意虧損 USDT（1R）<input id="maxLoss" type="number" step="any" value="5"></label><label class="small">槓桿<input id="leverage" type="number" min="1" max="125" value="20"></label><label class="small" id="manualTechWrap" style="display:none">技術 SL（可手動覆寫）<input id="manualTechSL" type="number" step="any" placeholder="留空＝採系統技術SL"></label><label class="small" id="actualMarginWrap" style="display:none">實際投入保證金 USDT<input id="actualMargin" type="number" step="any" placeholder="計畫後自動帶入，可自行修改"></label></div><div id="modeHelp" class="small" style="margin-top:8px">固定倉位：投入保證金 × 槓桿決定名義倉位，再反推 -1R 資金SL。</div><div class="actions"><button id="useLive">帶入目前價</button><button id="calcPlan">先計算進場計畫</button><button id="enterPosition">我已進場・開始追蹤</button><button id="closePosition">結束持倉</button></div><div id="preTradePlan" class="metricgrid" style="margin-top:10px"></div><div id="preTradeAlert"></div><div id="positionMetrics" class="metricgrid"></div><div id="riskAlert"></div><div class="small" style="margin-top:8px">先看「進場計畫」再下單。固定投入模式：你指定投入保證金＋槓桿＋1R，系統反推資金SL。專業風控模式：技術SL＋1R反推最大名義倉位；槓桿只顯示最低初始保證金需求與安全檢查。建立持倉後幣種鎖定；即時U盈虧、ROE皆未扣手續費、滑價與資金費。</div></div></div>
 <div id="chartSection" class="card full"><div class="label">專業 K 線圖｜OHLC + MA7 / MA25 + 成交量 + Entry / 資金SL / 技術SL / 強平警戒 / TP</div><canvas id="chart" width="1200" height="520"></canvas><div class="small" style="margin-top:8px">綠K＝收漲、紅K＝收跌；藍線 MA7、黃線 MA25。滑鼠滾輪＝放大/縮小；按住拖曳＝左右移動；移到 K 棒上可看 OHLC/成交量。雙擊圖表回到最新 K 棒。</div></div>
 <div id="radarSection" class="card full"><div class="label">輕量交易雷達｜僅顯示 5 個活躍 USDT 永續，降低手機負載</div><div class="small" id="scanInfo" style="margin-top:6px">載入中…</div><div class="radarWrap"><table class="radar"><thead><tr><th>標的</th><th>價格</th><th>RSI</th><th>Funding</th><th>OI</th><th>24H活躍量</th><th>15m/1H/4H</th><th>Score</th><th>結構</th></tr></thead><tbody id="radar"></tbody></table></div></div>
 </div></div>
-<nav class="iosnav"><button data-page="market" class="active"><b>◎</b>市場</button><button data-page="analysis"><b>⌁</b>分析</button><button data-page="chart"><b>▥</b>圖表</button><button data-page="trade"><b>◇</b>交易</button></nav>
+<nav class="iosnav"><button data-page="market" class="active"><b>◎</b>市場狀況</button><button data-page="analysis"><b>⌁</b>分析</button><button data-page="trade"><b>◇</b>交易</button><button data-page="holding"><b>▣</b>持倉</button></nav>
 <script>
 const API='https://www.okx.com'; const MAJORS=['BTC-USDT-SWAP','ETH-USDT-SWAP','SOL-USDT-SWAP','XRP-USDT-SWAP','DOGE-USDT-SWAP']; let allInstruments=[]; let instrumentMap=new Map(); let tickerMap=new Map(); let marketLast=new Map(); let majorSignals=new Map(); let ws=null; let activeSym=''; let currentKs=[]; let currentM7=[]; let currentM25=[]; let currentLevels={}; let currentBar='1H'; let liveLast=NaN; let lastWsAt=0; let analysisBusy=false; const $=id=>document.getElementById(id); const fmt=(x,d=2)=>{x=Number(x);return Number.isFinite(x)?x.toLocaleString(undefined,{maximumFractionDigits:d}):'—'};
 function tickDecimals(sym=activeSym){const t=instrumentMap.get(sym)?.tickSz;if(!t)return null;const z=String(t).toLowerCase();if(z.includes('e-'))return Number(z.split('e-')[1]);const a=z.split('.');return a[1]?a[1].replace(/0+$/,'').length:0}
@@ -117,7 +137,7 @@ function connectTicker(sym){
   try{
     ws=new WebSocket('wss://ws.okx.com:8443/ws/v5/public');
     ws.onopen=()=>{ $('liveDot').textContent='● LIVE'; $('liveDot').style.color='#3ddc97'; const args=wsSymbols(sym).map(instId=>({channel:'tickers',instId})); ws.send(JSON.stringify({op:'subscribe',args})); };
-    ws.onmessage=ev=>{try{let m=JSON.parse(ev.data);if(m.arg?.channel==='tickers'&&m.data?.[0]){let t=m.data[0],sid=t.instId,px=+t.last;if(Number.isFinite(px)&&px>0)marketLast.set(sid,px); if(sid===activeSym){liveLast=px;lastWsAt=Date.now();$('price').textContent=pf(liveLast,activeSym);$('lastTs').textContent=tsText(t.ts)+' ・ WS';$('bbo').textContent=`${pf(+t.bidPx,activeSym)} / ${pf(+t.askPx,activeSym)}`;let sp=+t.askPx-(+t.bidPx);$('spread').textContent=`Spread ${pf(sp,activeSym)}`;if(currentKs.length){let last=currentKs.at(-1);if(last){last[4]=String(liveLast);last[2]=String(Math.max(+last[2],liveLast));last[3]=String(Math.min(+last[3],liveLast));}drawChart(currentKs,currentM7,currentM25,currentLevels);}} renderMajorWatch(); if(position?.symbol===sid)renderPosition();}}catch(e){}};
+    ws.onmessage=ev=>{try{let m=JSON.parse(ev.data);if(m.arg?.channel==='tickers'&&m.data?.[0]){let t=m.data[0],sid=t.instId,px=+t.last;if(Number.isFinite(px)&&px>0)marketLast.set(sid,px); if(sid===activeSym){liveLast=px;lastWsAt=Date.now();$('price').textContent=pf(liveLast,activeSym);$('lastTs').textContent=tsText(t.ts)+' ・ WS';$('bbo').textContent=`${pf(+t.bidPx,activeSym)} / ${pf(+t.askPx,activeSym)}`;let sp=+t.askPx-(+t.bidPx);$('spread').textContent=`Spread ${pf(sp,activeSym)}`;if(currentKs.length){let last=currentKs.at(-1);if(last){last[4]=String(liveLast);last[2]=String(Math.max(+last[2],liveLast));last[3]=String(Math.min(+last[3],liveLast));}drawChart(currentKs,currentM7,currentM25,currentLevels);}} const mp=document.querySelector(`[data-major-price=\"${sid}\"]`);if(mp)mp.textContent=pf(px,sid); if(position?.symbol===sid)renderPosition();}}catch(e){}};
     ws.onerror=()=>{$('liveDot').textContent='● REST';$('liveDot').style.color='#f7c65f';$('lastTs').textContent='WebSocket 失敗，使用 REST 備援'};
     ws.onclose=()=>{ $('liveDot').textContent='● RECONNECT'; $('liveDot').style.color='#f7c65f'; if(activeSym===sym)setTimeout(()=>connectTicker(sym),1500)};
   }catch(e){$('lastTs').textContent='WebSocket 不可用，使用 REST 備援'}
@@ -166,8 +186,8 @@ function applySymbolSearch(){
 }
 function renderMajorWatch(){
  const el=$('majorWatch'); if(!el)return;
- el.innerHTML=MAJORS.map(sym=>{const px=marketLast.get(sym)??(+tickerMap.get(sym)?.last||NaN),sig=majorSignals.get(sym);return `<div class="majorcard" data-major="${sym}"><div class="majorname">${sym.replace('-USDT-SWAP','')}</div><div class="majorprice">${pf(px,sym)}</div><div class="majorinfo">${sig?`${sig.mtf}<br><span class="${sig.score>=3?'good':sig.score<=-3?'bad':'neutral'}">Score ${sig.score>0?'+':''}${sig.score}・${sig.state}</span>`:'技術狀態讀取中…'}</div></div>`}).join('');
- document.querySelectorAll('[data-major]').forEach(x=>x.onclick=()=>{const sym=x.dataset.major;$('symbol').value=sym;$('status').textContent='切換 '+sym+'…（優先使用預載快取）';load(sym,$('bar').value);window.scrollTo({top:0,behavior:'auto'})});
+ el.innerHTML=MAJORS.map(sym=>{const px=marketLast.get(sym)??(+tickerMap.get(sym)?.last||NaN),sig=majorSignals.get(sym);return `<div class="majorcard" data-major="${sym}"><div class="majorname">${sym.replace('-USDT-SWAP','')}</div><div class="majorprice" data-major-price="${sym}">${pf(px,sym)}</div><div class="majorinfo" data-major-info="${sym}">${sig?`${sig.mtf}<br><span class="${sig.score>=3?'good':sig.score<=-3?'bad':'neutral'}">Score ${sig.score>0?'+':''}${sig.score}・${sig.state}</span>`:'技術狀態讀取中…'}</div></div>`}).join('');
+ document.querySelectorAll('[data-major]').forEach(x=>x.onclick=()=>{const sym=x.dataset.major;$('symbol').value=sym;$('status').textContent='切換 '+sym+'…（優先使用預載快取）';load(sym,$('bar').value);if(matchMedia('(max-width:700px)').matches){document.querySelector('.iosnav button[data-page="analysis"]')?.click()}else{window.scrollTo({top:0,behavior:'auto'})}});
 }
 async function refreshMajors(){
  try{
@@ -197,7 +217,7 @@ async function scan(){
     await Promise.all(Array.from({length:4},worker));
     rows.sort((a,b)=>{const rank=x=>x.state.includes('🔥')?3:x.state.includes('🟢')?2:1;return rank(b)-rank(a)||Math.abs(b.sc)-Math.abs(a.sc)||b.vol-a.vol});
     $('radar').innerHTML=rows.map(r=>`<tr data-sym="${r.s}" style="cursor:pointer"><td>${r.s.replace('-USDT-SWAP','')}</td><td>${pf(r.p,r.s)}</td><td>${fmt(r.rv,1)}</td><td>${fmt(r.f,4)}%</td><td>${fmt(r.oi,0)}</td><td>${r.vol?fmt(r.vol,0):'—'}</td><td>${r.con}</td><td>${r.sc>0?'+':''}${r.sc}</td><td class="${r.state.includes('LONG')?'good':r.state.includes('SHORT')?'bad':'neutral'}">${r.state}</td></tr>`).join('');
-    document.querySelectorAll('#radar tr[data-sym]').forEach(tr=>tr.onclick=()=>{$('symbol').value=tr.dataset.sym;load();window.scrollTo({top:0,behavior:'smooth'})});
+    document.querySelectorAll('#radar tr[data-sym]').forEach(tr=>tr.onclick=()=>{$('symbol').value=tr.dataset.sym;load();if(matchMedia('(max-width:700px)').matches){document.querySelector('.iosnav button[data-page="analysis"]')?.click()}else{window.scrollTo({top:0,behavior:'smooth'})}});
   }catch(e){$('radar').innerHTML=`<tr><td colspan="9" class="bad">掃描失敗：${e.message}</td></tr>`}
 }
 let position=null;
@@ -264,24 +284,49 @@ $('enterPosition').onclick=()=>{let plan=buildPlan(true);if(!plan)return;let act
 $('closePosition').onclick=()=>{position=null;localStorage.removeItem('dh_position');connectTicker(activeSym||$('symbol').value);renderPosition()};try{position=JSON.parse(localStorage.getItem('dh_position')||'null');if(position&&!position.riskSL)position=null}catch(e){position=null}$('riskMode').dispatchEvent(new Event('change'))
 $('symbolSearch').addEventListener('keydown',e=>{if(e.key==='Enter')applySymbolSearch()});
 const chartEl=$('chart');chartEl.addEventListener('wheel',e=>{e.preventDefault();chartView.count=Math.max(20,Math.min(120,chartView.count+(e.deltaY>0?8:-8)));drawChart(currentKs,currentM7,currentM25,currentLevels)},{passive:false});chartEl.addEventListener('mousedown',e=>{chartView.drag=true;chartView.lastX=e.offsetX});window.addEventListener('mouseup',()=>chartView.drag=false);chartEl.addEventListener('mousemove',e=>{chartView.mouseX=e.offsetX;chartView.mouseY=e.offsetY;if(chartView.drag){let dx=e.offsetX-chartView.lastX;if(Math.abs(dx)>10){chartView.shift=Math.max(0,Math.min(Math.max(0,currentKs.length-20),chartView.shift+(dx>0?2:-2)));chartView.lastX=e.offsetX}}drawChart(currentKs,currentM7,currentM25,currentLevels)});chartEl.addEventListener('mouseleave',()=>{chartView.mouseX=null;chartView.mouseY=null;drawChart(currentKs,currentM7,currentM25,currentLevels)});chartEl.addEventListener('dblclick',()=>{chartView.shift=0;chartView.count=70;drawChart(currentKs,currentM7,currentM25,currentLevels)});
-$('refresh').onclick=()=>load();$('scan').onclick=scan;$('symbol').onchange=()=>load();$('bar').onchange=()=>load();(async()=>{await loadUniverse();renderMajorWatch();await load();refreshMajors();scan()})();setInterval(()=>load(),5000);setInterval(refreshMajors,15000); setInterval(()=>{if(lastWsAt && Date.now()-lastWsAt>5000){$('liveDot').textContent='● DELAY';$('liveDot').style.color='#f7c65f'}},1000);
+$('refresh').onclick=()=>load();$('scan').onclick=scan;$('symbol').onchange=()=>load();$('bar').onchange=()=>load();
+let backgroundRefreshBusy=false;
+async function backgroundRefresh(){
+ if(backgroundRefreshBusy||analysisBusy||document.hidden)return;
+ backgroundRefreshBusy=true;
+ const y=window.scrollY, x=window.scrollX;
+ const ae=document.activeElement, aeId=ae?.id||null;
+ const ss=(ae&&typeof ae.selectionStart==='number')?ae.selectionStart:null, se=(ae&&typeof ae.selectionEnd==='number')?ae.selectionEnd:null;
+ try{await load(activeSym||$('symbol').value,$('bar').value)}finally{
+   requestAnimationFrame(()=>{window.scrollTo(x,y);const el=aeId?$(aeId):null;if(el&&document.body.contains(el)){try{el.focus({preventScroll:true});if(ss!==null&&typeof el.setSelectionRange==='function')el.setSelectionRange(ss,se)}catch(e){}}});
+   backgroundRefreshBusy=false;
+ }
+}
+(async()=>{await loadUniverse();renderMajorWatch();await load();refreshMajors();scan()})();
+setInterval(backgroundRefresh,5000);setInterval(refreshMajors,15000); setInterval(()=>{if(lastWsAt && Date.now()-lastWsAt>5000){$('liveDot').textContent='● DELAY';$('liveDot').style.color='#f7c65f'}},1000);
 
 if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+function syncTradeContext(){
+ const cp=(src,dst,html=false)=>{const a=$(src),b=$(dst);if(!a||!b)return;b[html?'innerHTML':'textContent']=a[html?'innerHTML':'textContent']||'—';};
+ $('tradeCtxSymbol').textContent=activeSym||$('symbol')?.value||'—';
+ cp('price','tradeCtxPrice'); cp('signal','tradeCtxSignal'); cp('tradeState','tradeCtxState');
+ cp('triggerChecks','tradeCtxChecks',true); cp('entry','tradeCtxEntry'); cp('stop','tradeCtxStop'); cp('tp1','tradeCtxTp1'); cp('tp2','tradeCtxTp2');
+ const st=$('tradeState'), out=$('tradeCtxState'); if(st&&out) out.className=st.className;
+}
+['price','signal','tradeState','triggerChecks','entry','stop','tp1','tp2'].forEach(id=>{const el=$(id);if(el)new MutationObserver(syncTradeContext).observe(el,{subtree:true,childList:true,characterData:true,attributes:true});});
+setInterval(syncTradeContext,1000);
+
 function setupMobilePages(){
  const major=$('majorSection'), radar=$('radarSection'), chart=$('chartSection'), trade=$('positionSection');
  const grid=document.querySelector('.grid');
  if(!grid)return;
  [...grid.children].forEach(el=>{if(el!==radar&&el!==chart&&el!==trade){el.classList.add('mobile-page','analysis-page');el.dataset.mobilePage='analysis';}});
  [major,radar].forEach(el=>{if(el){el.classList.add('mobile-page');el.dataset.mobilePage='market';}});
- if(chart){chart.classList.add('mobile-page');chart.dataset.mobilePage='chart';}
+ if(chart){chart.classList.add('mobile-page','analysis-page');chart.dataset.mobilePage='analysis';}
  if(trade){trade.classList.add('mobile-page');trade.dataset.mobilePage='trade';}
  const controls=document.querySelector('.controls'); if(controls){controls.dataset.mobileAlways='1';}
  function show(page){
   if(!matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mobile-page').forEach(x=>x.classList.remove('mobile-active'));return;}
-  document.querySelectorAll('.mobile-page').forEach(x=>x.classList.toggle('mobile-active',x.dataset.mobilePage===page));
+  document.body.classList.toggle('holding-mode',page==='holding');
+  document.querySelectorAll('.mobile-page').forEach(x=>{const on=x.dataset.mobilePage===page || (page==='holding' && x===trade);x.classList.toggle('mobile-active',on)});
   document.querySelectorAll('.iosnav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
   localStorage.setItem('dh_mobile_page',page); window.scrollTo({top:0,behavior:'instant'});
-  if(page==='chart') setTimeout(()=>drawChart(),80);
+  if(page==='analysis') setTimeout(()=>drawChart(),80); if(page==='trade') setTimeout(syncTradeContext,30);
  }
  document.querySelectorAll('.iosnav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));
  show(localStorage.getItem('dh_mobile_page')||'market');
