@@ -23,7 +23,22 @@ html,body{overscroll-behavior-y:none}body{padding-top:env(safe-area-inset-top);p
  .iosnav{grid-template-columns:repeat(4,1fr);padding-top:5px}.iosnav button{min-height:51px;border-radius:10px}.iosnav button.active{background:#1a2744;color:#fff}.iosnav button.active b{color:#7fb0ff}
  body.holding-mode #positionSection .formgrid,body.holding-mode #positionSection #modeHelp,body.holding-mode #positionSection .actions,body.holding-mode #positionSection #preTradePlan,body.holding-mode #positionSection #preTradeAlert,body.holding-mode #positionSection>.label,body.holding-mode #positionSection .posbox>.small:last-child{display:none!important}
 }
-</style></head><body><header><div><h1>DATA HUNTER V4.4 — Mobile Trading Dashboard</h1><div class="tag">iPhone 優化・OKX USDT 永續・五大主流監控・雙風控・獨立持倉</div></div><div id="status" class="status">準備中</div></header>
+
+@media(max-width:700px){
+ .iosnav{grid-template-columns:repeat(3,1fr)!important}
+ body.mobile-v45 .controls select, body.mobile-v45 .controls button{display:none}
+ body.mobile-v45 .controls{grid-template-columns:1fr!important}
+ body.mobile-v45 .controls #symbolSearch{display:block!important;grid-column:1/-1}
+ #holdingsSection{display:none}
+ body.holding-mode #holdingsSection{display:block!important}
+ body.holding-mode #positionSection{display:none!important}
+ .holdingCard{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:#101a30}
+ .holdingTop{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+ .holdingPnl{font-size:22px;font-weight:800}
+ .holdingGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+ .holdingGrid>div{background:#0c1426;border-radius:9px;padding:9px}
+}
+</style></head><body><header><div><h1>DATA HUNTER V4.5 — 精簡交易版</h1><div class="tag">市場 → 點幣 → 交易判定・K線・最多 3 筆手動持倉</div></div><div id="status" class="status">準備中</div></header>
 <div class="wrap"><div class="controls"><input id="symbolSearch" placeholder="搜尋幣種，例如 TRUMP / BTC" style="width:220px"><select id="symbol"><option>BTC-USDT-SWAP</option></select><select id="bar"><option value="5m">5m</option><option value="15m">15m</option><option value="1H" selected>1H</option><option value="4H">4H</option></select><button id="refresh">重新整理</button><button id="scan">掃描市場</button></div>
 <div id="majorSection" class="card" style="margin-bottom:14px"><div class="label">五大主流幣即時監控｜點卡片只切換分析，不會改變已建立持倉</div><div id="majorWatch" class="majorbar" style="margin-top:10px;margin-bottom:0"></div></div>
 <div id="error" class="err"></div><div class="grid">
@@ -53,9 +68,10 @@ html,body{overscroll-behavior-y:none}body{padding-top:env(safe-area-inset-top);p
 </div>
 <div class="label">進場計畫 / 手動持倉追蹤</div><div class="posbox"><div id="positionState" class="triggerTitle neutral">尚未建立持倉</div><div id="positionSymbol" class="possymbol">尚未鎖定幣種</div><div class="formgrid"><label class="small">風控模式<select id="riskMode"><option value="fixed">固定倉位模式</option><option value="pro">專業風控模式</option></select></label><label class="small">方向<select id="posSide"><option value="long">LONG 做多</option><option value="short">SHORT 做空</option></select></label><label class="small">預計 / 實際成交價<input id="posEntry" type="number" step="any" placeholder="可用目前價"></label><label class="small" id="marginLabel">本次投入保證金 USDT<input id="accountEquity" type="number" step="any" value="100"></label><label class="small">最大願意虧損 USDT（1R）<input id="maxLoss" type="number" step="any" value="5"></label><label class="small">槓桿<input id="leverage" type="number" min="1" max="125" value="20"></label><label class="small" id="manualTechWrap" style="display:none">技術 SL（可手動覆寫）<input id="manualTechSL" type="number" step="any" placeholder="留空＝採系統技術SL"></label><label class="small" id="actualMarginWrap" style="display:none">實際投入保證金 USDT<input id="actualMargin" type="number" step="any" placeholder="計畫後自動帶入，可自行修改"></label></div><div id="modeHelp" class="small" style="margin-top:8px">固定倉位：投入保證金 × 槓桿決定名義倉位，再反推 -1R 資金SL。</div><div class="actions"><button id="useLive">帶入目前價</button><button id="calcPlan">先計算進場計畫</button><button id="enterPosition">我已進場・開始追蹤</button><button id="closePosition">結束持倉</button></div><div id="preTradePlan" class="metricgrid" style="margin-top:10px"></div><div id="preTradeAlert"></div><div id="positionMetrics" class="metricgrid"></div><div id="riskAlert"></div><div class="small" style="margin-top:8px">先看「進場計畫」再下單。固定投入模式：你指定投入保證金＋槓桿＋1R，系統反推資金SL。專業風控模式：技術SL＋1R反推最大名義倉位；槓桿只顯示最低初始保證金需求與安全檢查。建立持倉後幣種鎖定；即時U盈虧、ROE皆未扣手續費、滑價與資金費。</div></div></div>
 <div id="chartSection" class="card full"><div class="label">專業 K 線圖｜OHLC + MA7 / MA25 + 成交量 + Entry / 資金SL / 技術SL / 強平警戒 / TP</div><canvas id="chart" width="1200" height="520"></canvas><div class="small" style="margin-top:8px">綠K＝收漲、紅K＝收跌；藍線 MA7、黃線 MA25。滑鼠滾輪＝放大/縮小；按住拖曳＝左右移動；移到 K 棒上可看 OHLC/成交量。雙擊圖表回到最新 K 棒。</div></div>
+<div id="holdingsSection" class="card full"><div class="label">我的持倉｜最多 3 筆</div><div class="small" style="margin:6px 0 10px">手動建立後鎖定幣種；即時盈虧未扣手續費、滑價與資金費。</div><div id="holdingCards"></div></div>
 <div id="radarSection" class="card full"><div class="label">輕量交易雷達｜僅顯示 5 個活躍 USDT 永續，降低手機負載</div><div class="small" id="scanInfo" style="margin-top:6px">載入中…</div><div class="radarWrap"><table class="radar"><thead><tr><th>標的</th><th>價格</th><th>RSI</th><th>Funding</th><th>OI</th><th>24H活躍量</th><th>15m/1H/4H</th><th>Score</th><th>結構</th></tr></thead><tbody id="radar"></tbody></table></div></div>
 </div></div>
-<nav class="iosnav"><button data-page="market" class="active"><b>◎</b>市場狀況</button><button data-page="analysis"><b>⌁</b>分析</button><button data-page="trade"><b>◇</b>交易</button><button data-page="holding"><b>▣</b>持倉</button></nav>
+<nav class="iosnav"><button data-page="market" class="active"><b>◎</b>市場狀況</button><button data-page="trade"><b>◇</b>交易</button><button data-page="holding"><b>▣</b>持倉</button></nav>
 <script>
 const API='https://www.okx.com'; const MAJORS=['BTC-USDT-SWAP','ETH-USDT-SWAP','SOL-USDT-SWAP','XRP-USDT-SWAP','DOGE-USDT-SWAP']; let allInstruments=[]; let instrumentMap=new Map(); let tickerMap=new Map(); let marketLast=new Map(); let majorSignals=new Map(); let ws=null; let activeSym=''; let currentKs=[]; let currentM7=[]; let currentM25=[]; let currentLevels={}; let currentBar='1H'; let liveLast=NaN; let lastWsAt=0; let analysisBusy=false; const $=id=>document.getElementById(id); const fmt=(x,d=2)=>{x=Number(x);return Number.isFinite(x)?x.toLocaleString(undefined,{maximumFractionDigits:d}):'—'};
 function tickDecimals(sym=activeSym){const t=instrumentMap.get(sym)?.tickSz;if(!t)return null;const z=String(t).toLowerCase();if(z.includes('e-'))return Number(z.split('e-')[1]);const a=z.split('.');return a[1]?a[1].replace(/0+$/,'').length:0}
@@ -187,7 +203,7 @@ function applySymbolSearch(){
 function renderMajorWatch(){
  const el=$('majorWatch'); if(!el)return;
  el.innerHTML=MAJORS.map(sym=>{const px=marketLast.get(sym)??(+tickerMap.get(sym)?.last||NaN),sig=majorSignals.get(sym);return `<div class="majorcard" data-major="${sym}"><div class="majorname">${sym.replace('-USDT-SWAP','')}</div><div class="majorprice" data-major-price="${sym}">${pf(px,sym)}</div><div class="majorinfo" data-major-info="${sym}">${sig?`${sig.mtf}<br><span class="${sig.score>=3?'good':sig.score<=-3?'bad':'neutral'}">Score ${sig.score>0?'+':''}${sig.score}・${sig.state}</span>`:'技術狀態讀取中…'}</div></div>`}).join('');
- document.querySelectorAll('[data-major]').forEach(x=>x.onclick=()=>{const sym=x.dataset.major;$('symbol').value=sym;$('status').textContent='切換 '+sym+'…（優先使用預載快取）';load(sym,$('bar').value);if(matchMedia('(max-width:700px)').matches){document.querySelector('.iosnav button[data-page="analysis"]')?.click()}else{window.scrollTo({top:0,behavior:'auto'})}});
+ document.querySelectorAll('[data-major]').forEach(x=>x.onclick=()=>{const sym=x.dataset.major;$('symbol').value=sym;$('status').textContent='切換 '+sym+'…（優先使用預載快取）';load(sym,$('bar').value);if(matchMedia('(max-width:700px)').matches){document.querySelector('.iosnav button[data-page="trade"]')?.click()}else{window.scrollTo({top:0,behavior:'auto'})}});
 }
 async function refreshMajors(){
  try{
@@ -217,10 +233,10 @@ async function scan(){
     await Promise.all(Array.from({length:4},worker));
     rows.sort((a,b)=>{const rank=x=>x.state.includes('🔥')?3:x.state.includes('🟢')?2:1;return rank(b)-rank(a)||Math.abs(b.sc)-Math.abs(a.sc)||b.vol-a.vol});
     $('radar').innerHTML=rows.map(r=>`<tr data-sym="${r.s}" style="cursor:pointer"><td>${r.s.replace('-USDT-SWAP','')}</td><td>${pf(r.p,r.s)}</td><td>${fmt(r.rv,1)}</td><td>${fmt(r.f,4)}%</td><td>${fmt(r.oi,0)}</td><td>${r.vol?fmt(r.vol,0):'—'}</td><td>${r.con}</td><td>${r.sc>0?'+':''}${r.sc}</td><td class="${r.state.includes('LONG')?'good':r.state.includes('SHORT')?'bad':'neutral'}">${r.state}</td></tr>`).join('');
-    document.querySelectorAll('#radar tr[data-sym]').forEach(tr=>tr.onclick=()=>{$('symbol').value=tr.dataset.sym;load();if(matchMedia('(max-width:700px)').matches){document.querySelector('.iosnav button[data-page="analysis"]')?.click()}else{window.scrollTo({top:0,behavior:'smooth'})}});
+    document.querySelectorAll('#radar tr[data-sym]').forEach(tr=>tr.onclick=()=>{$('symbol').value=tr.dataset.sym;load();if(matchMedia('(max-width:700px)').matches){document.querySelector('.iosnav button[data-page="trade"]')?.click()}else{window.scrollTo({top:0,behavior:'smooth'})}});
   }catch(e){$('radar').innerHTML=`<tr><td colspan="9" class="bad">掃描失敗：${e.message}</td></tr>`}
 }
-let position=null;
+let position=null; let positions=[];
 function validNum(v){v=Number(v);return Number.isFinite(v)&&v>0?v:null}
 function liquidationWarning(entry,lev,side){
  // 這不是 OKX 實際強平價。無私人持倉資料時，以「1/槓桿」作理論保證金耗盡距離，
@@ -280,8 +296,14 @@ $('useLive').onclick=()=>{if(validNum(liveLast)){$('posEntry').value=liveLast;bu
 $('calcPlan').onclick=()=>buildPlan(true);
 $('riskMode').onchange=()=>{let pro=$('riskMode').value==='pro';$('marginLabel').firstChild.textContent=pro?'帳戶可用資金 USDT':'本次投入保證金 USDT';$('manualTechWrap').style.display=pro?'block':'none';$('actualMarginWrap').style.display=pro?'block':'none';$('modeHelp').textContent=pro?'專業風控：先由技術SL決定失效位置，再用1R反推最大名義倉位；槓桿只決定最低初始保證金需求，不把最低保證金當成建議投入。':'固定倉位：進場前以投入保證金 × 槓桿決定名義倉位，再反推 -1R 資金SL。';buildPlan(false)};
 ['posEntry','accountEquity','maxLoss','leverage','manualTechSL'].forEach(id=>$(id).addEventListener('input',()=>buildPlan(false)));$('posSide').addEventListener('change',()=>buildPlan(false));
-$('enterPosition').onclick=()=>{let plan=buildPlan(true);if(!plan)return;let actualEntry=validNum($('posEntry').value)||plan.entry;if(plan.mode==='pro'){let actualMargin=validNum($('actualMargin').value);if(!actualMargin){alert('請輸入實際投入保證金。');return}if(actualMargin>plan.accountEquity){alert('實際投入保證金不可超過帳戶可用資金。');return}let actualNotional=actualMargin*plan.leverage;let move=Math.abs(actualEntry-plan.techSL)/actualEntry;let actualLoss=actualNotional*move;let ratio=actualLoss/plan.maxLoss;let msg=`你選擇投入 ${moneyFmt(actualMargin)}U × ${plan.leverage}X = ${moneyFmt(actualNotional)}U 名義倉位。\n技術SL觸發預估損失約 ${moneyFmt(actualLoss)}U = ${fmt(ratio,2)}R。`;if(ratio>1.02&&!confirm(msg+'\n已超過你設定的 1R 風險，仍要建立持倉嗎？'))return;plan.margin=actualMargin;plan.notional=actualNotional;plan.riskSL=plan.techSL;plan.actualRiskLoss=actualLoss}else{plan.margin=plan.margin;plan.actualRiskLoss=plan.maxLoss}position={...plan,entry:actualEntry};localStorage.setItem('dh_position',JSON.stringify(position));marketLast.set(position.symbol,marketLast.get(position.symbol)||actualEntry);connectTicker(activeSym||$('symbol').value);renderPosition()};
-$('closePosition').onclick=()=>{position=null;localStorage.removeItem('dh_position');connectTicker(activeSym||$('symbol').value);renderPosition()};try{position=JSON.parse(localStorage.getItem('dh_position')||'null');if(position&&!position.riskSL)position=null}catch(e){position=null}$('riskMode').dispatchEvent(new Event('change'))
+$('enterPosition').onclick=()=>{let plan=buildPlan(true);if(!plan)return;if(positions.length>=3){alert('最多同時追蹤 3 筆手動持倉，請先結束一筆。');return}let actualEntry=validNum($('posEntry').value)||plan.entry;if(plan.mode==='pro'){let actualMargin=validNum($('actualMargin').value);if(!actualMargin){alert('請輸入實際投入保證金。');return}if(actualMargin>plan.accountEquity){alert('實際投入保證金不可超過帳戶可用資金。');return}let actualNotional=actualMargin*plan.leverage;let move=Math.abs(actualEntry-plan.techSL)/actualEntry;let actualLoss=actualNotional*move;let ratio=actualLoss/plan.maxLoss;let msg=`你選擇投入 ${moneyFmt(actualMargin)}U × ${plan.leverage}X = ${moneyFmt(actualNotional)}U 名義倉位。\n技術SL觸發預估損失約 ${moneyFmt(actualLoss)}U = ${fmt(ratio,2)}R。`;if(ratio>1.02&&!confirm(msg+'\n已超過你設定的 1R 風險，仍要建立持倉嗎？'))return;plan.margin=actualMargin;plan.notional=actualNotional;plan.riskSL=plan.techSL;plan.actualRiskLoss=actualLoss}else{plan.actualRiskLoss=plan.maxLoss}position={...plan,entry:actualEntry,id:Date.now()};positions.push(position);savePositions();renderPosition();renderHoldingCards();alert(`已建立第 ${positions.length} 筆持倉：${position.symbol}`)};
+$('closePosition').onclick=()=>{if(!position)return;positions=positions.filter(p=>p.id!==position.id);position=positions[0]||null;savePositions();renderPosition();renderHoldingCards()};
+function savePositions(){localStorage.setItem('dh_positions',JSON.stringify(positions.slice(0,3)));localStorage.removeItem('dh_position')}
+try{positions=JSON.parse(localStorage.getItem('dh_positions')||'[]');if(!Array.isArray(positions))positions=[];positions=positions.filter(p=>p&&p.riskSL).slice(0,3);if(!positions.length){let legacy=JSON.parse(localStorage.getItem('dh_position')||'null');if(legacy&&legacy.riskSL){legacy.id=legacy.id||Date.now();positions=[legacy];savePositions()}}position=positions[0]||null}catch(e){positions=[];position=null}
+async function renderHoldingCards(){let box=$('holdingCards');if(!box)return;if(!positions.length){box.innerHTML='<div class="triggerbox">目前沒有手動持倉。到「交易」頁建立後會顯示在這裡。</div>';return}let html=[];for(let i=0;i<positions.length;i++){let p=positions[i],last=marketLast.get(p.symbol);try{let t=await get(`/api/v5/market/ticker?instId=${p.symbol}`,2500);if(t&&t[0]&&+t[0].last){last=+t[0].last;marketLast.set(p.symbol,last)}}catch(e){}last=Number(last)||p.entry;let n=Number(p.notional)||Number(p.margin)*Number(p.leverage),side=p.side==='short'?-1:1,pnl=(last-p.entry)/p.entry*n*side,roe=pnl/Number(p.margin)*100;html.push(`<div class="holdingCard"><div class="holdingTop"><div><b>${i+1}. ${p.symbol.replace('-USDT-SWAP','')}</b><div class="small">${p.side.toUpperCase()}・${p.leverage}X・投入 ${moneyFmt(p.margin)}U</div></div><div class="holdingPnl ${pnl>=0?'good':'bad'}">${pnl>=0?'+':''}${moneyFmt(pnl)} U<div class="small">ROE ${roe>=0?'+':''}${fmt(roe,2)}%</div></div></div><div class="holdingGrid"><div><span class="small">LIVE</span><br><b>${pf(last,p.symbol)}</b></div><div><span class="small">進場</span><br><b>${pf(p.entry,p.symbol)}</b></div><div><span class="small">SL</span><br><b>${pf(p.riskSL,p.symbol)}</b></div><div><span class="small">TP1 / TP2</span><br><b>${pf(p.tp1,p.symbol)} / ${pf(p.tp2,p.symbol)}</b></div></div><button style="margin-top:10px;width:100%" onclick="closeHolding(${p.id})">結束這筆持倉</button></div>`)}box.innerHTML=html.join('')}
+window.closeHolding=id=>{positions=positions.filter(p=>p.id!==id);position=positions[0]||null;savePositions();renderPosition();renderHoldingCards()};
+setInterval(renderHoldingCards,5000);
+$('riskMode').dispatchEvent(new Event('change'))
 $('symbolSearch').addEventListener('keydown',e=>{if(e.key==='Enter')applySymbolSearch()});
 const chartEl=$('chart');chartEl.addEventListener('wheel',e=>{e.preventDefault();chartView.count=Math.max(20,Math.min(120,chartView.count+(e.deltaY>0?8:-8)));drawChart(currentKs,currentM7,currentM25,currentLevels)},{passive:false});chartEl.addEventListener('mousedown',e=>{chartView.drag=true;chartView.lastX=e.offsetX});window.addEventListener('mouseup',()=>chartView.drag=false);chartEl.addEventListener('mousemove',e=>{chartView.mouseX=e.offsetX;chartView.mouseY=e.offsetY;if(chartView.drag){let dx=e.offsetX-chartView.lastX;if(Math.abs(dx)>10){chartView.shift=Math.max(0,Math.min(Math.max(0,currentKs.length-20),chartView.shift+(dx>0?2:-2)));chartView.lastX=e.offsetX}}drawChart(currentKs,currentM7,currentM25,currentLevels)});chartEl.addEventListener('mouseleave',()=>{chartView.mouseX=null;chartView.mouseY=null;drawChart(currentKs,currentM7,currentM25,currentLevels)});chartEl.addEventListener('dblclick',()=>{chartView.shift=0;chartView.count=70;drawChart(currentKs,currentM7,currentM25,currentLevels)});
 $('refresh').onclick=()=>load();$('scan').onclick=scan;$('symbol').onchange=()=>load();$('bar').onchange=()=>load();
@@ -312,25 +334,19 @@ function syncTradeContext(){
 setInterval(syncTradeContext,1000);
 
 function setupMobilePages(){
- const major=$('majorSection'), radar=$('radarSection'), chart=$('chartSection'), trade=$('positionSection');
- const grid=document.querySelector('.grid');
+ document.body.classList.add('mobile-v45');
+ const major=$('majorSection'),radar=$('radarSection'),chart=$('chartSection'),trade=$('positionSection'),holds=$('holdingsSection'),grid=document.querySelector('.grid');
  if(!grid)return;
- [...grid.children].forEach(el=>{if(el!==radar&&el!==chart&&el!==trade){el.classList.add('mobile-page','analysis-page');el.dataset.mobilePage='analysis';}});
- [major,radar].forEach(el=>{if(el){el.classList.add('mobile-page');el.dataset.mobilePage='market';}});
- if(chart){chart.classList.add('mobile-page','analysis-page');chart.dataset.mobilePage='analysis';}
- if(trade){trade.classList.add('mobile-page');trade.dataset.mobilePage='trade';}
- const controls=document.querySelector('.controls'); if(controls){controls.dataset.mobileAlways='1';}
- function show(page){
-  if(!matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mobile-page').forEach(x=>x.classList.remove('mobile-active'));return;}
-  document.body.classList.toggle('holding-mode',page==='holding');
-  document.querySelectorAll('.mobile-page').forEach(x=>{const on=x.dataset.mobilePage===page || (page==='holding' && x===trade);x.classList.toggle('mobile-active',on)});
-  document.querySelectorAll('.iosnav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));
-  localStorage.setItem('dh_mobile_page',page); window.scrollTo({top:0,behavior:'instant'});
-  if(page==='analysis') setTimeout(()=>drawChart(),80); if(page==='trade') setTimeout(syncTradeContext,30);
- }
- document.querySelectorAll('.iosnav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));
- show(localStorage.getItem('dh_mobile_page')||'market');
- addEventListener('resize',()=>{if(matchMedia('(max-width:700px)').matches)show(localStorage.getItem('dh_mobile_page')||'market');else document.querySelectorAll('.mobile-page').forEach(x=>x.classList.remove('mobile-active'));});
+ [...grid.children].forEach(el=>{el.classList.add('mobile-page');el.dataset.mobilePage='trade'});
+ [major,radar].forEach(el=>{if(el){el.classList.add('mobile-page');el.dataset.mobilePage='market'}});
+ if(chart){chart.classList.add('mobile-page');chart.dataset.mobilePage='trade'}
+ if(trade){trade.classList.add('mobile-page');trade.dataset.mobilePage='trade'}
+ if(holds){holds.classList.add('mobile-page');holds.dataset.mobilePage='holding'}
+ // 手機交易頁只保留：LIVE、MA、支撐、壓力、可解釋訊號、進場判定、K線、下單區
+ const keepLabels=['LIVE 最新成交價','MA7 / MA25','近期支撐','近期壓力','可解釋訊號','自動進場判定'];
+ [...grid.children].forEach(el=>{if([radar,chart,trade,holds].includes(el))return;let lab=el.querySelector('.label')?.textContent||'';if(!keepLabels.some(k=>lab.includes(k)))el.classList.add('v45-extra')});
+ function show(page){if(!matchMedia('(max-width:700px)').matches){document.querySelectorAll('.mobile-page').forEach(x=>x.classList.remove('mobile-active'));return}document.body.classList.toggle('holding-mode',page==='holding');document.querySelectorAll('.mobile-page').forEach(x=>x.classList.toggle('mobile-active',x.dataset.mobilePage===page));document.querySelectorAll('.v45-extra').forEach(x=>x.style.display=page==='trade'?'none':'');document.querySelectorAll('.iosnav button').forEach(b=>b.classList.toggle('active',b.dataset.page===page));localStorage.setItem('dh_mobile_page',page);window.scrollTo({top:0,behavior:'instant'});if(page==='trade')setTimeout(()=>{syncTradeContext();drawChart()},60);if(page==='holding')renderHoldingCards()}
+ window.dhShowPage=show;document.querySelectorAll('.iosnav button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.page)));show(localStorage.getItem('dh_mobile_page')||'market');
 }
 setupMobilePages();
 </script></body></html>
