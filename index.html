@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#0b1020"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="DATA SNIPER"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><title>DATA SNIPER V9.41</title>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#0b1020"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="DATA SNIPER"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-192.png"><title>DATA SNIPER V9.42</title>
 <style>
 :root{--bg:#0b1020;--panel:#121a2f;--panel2:#17213a;--text:#e9eefc;--muted:#91a0bd;--line:#293755;--good:#3ddc97;--bad:#ff6b7a;--warn:#f7c65f;--blue:#6ca6ff}*{box-sizing:border-box}body{margin:0;font-family:system-ui,"Microsoft JhengHei",sans-serif;background:var(--bg);color:var(--text)}header{padding:18px 22px;border-bottom:1px solid var(--line);display:flex;gap:16px;align-items:center;flex-wrap:wrap}h1{font-size:20px;margin:0}.tag{font-size:12px;color:var(--muted)}select,button,input{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:9px 12px;border-radius:8px}button{cursor:pointer}input{background:var(--panel2);color:var(--text);border:1px solid var(--line);padding:9px 10px;border-radius:8px;width:100%}.formgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:10px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.posbox{border:1px solid var(--line);background:var(--panel2);border-radius:10px;padding:14px}.metricgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.metric{background:#0e1528;padding:10px;border-radius:8px}.dangerbox{border:1px solid var(--bad);padding:10px;border-radius:8px;margin-top:10px;color:#ffd1d6}.okbox{border:1px solid var(--good);padding:10px;border-radius:8px;margin-top:10px;color:#c9ffe7}@media(max-width:800px){.formgrid,.metricgrid{grid-template-columns:repeat(2,1fr)}}.wrap{max-width:1280px;margin:auto;padding:18px}.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}.label{color:var(--muted);font-size:12px}.value{font-size:22px;font-weight:700;margin-top:5px}.wide{grid-column:span 2}.full{grid-column:1/-1}canvas{width:100%;height:520px;background:#0e1528;border-radius:9px}.signal{font-size:26px;font-weight:800}.good{color:var(--good)}.bad{color:var(--bad)}.neutral{color:var(--warn)}ul{margin:8px 0 0;padding-left:20px;color:#cbd5eb}.radar{width:100%;border-collapse:collapse;margin-top:8px}.radar th,.radar td{padding:10px;border-bottom:1px solid var(--line);text-align:right}.radar th:first-child,.radar td:first-child{text-align:left}.status{color:var(--muted);font-size:13px}.pill{display:inline-block;padding:4px 8px;border:1px solid var(--line);border-radius:999px;font-size:12px;margin:2px}.plan{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px}.plan>div{background:var(--panel2);padding:10px;border-radius:8px}.small{font-size:12px;color:var(--muted)}.err{color:var(--bad);white-space:pre-wrap}.triggerbox{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--panel2);margin-top:10px}.triggerTitle{font-size:22px;font-weight:800}.checkrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--line)}.checkrow:last-child{border-bottom:0}.ok{color:var(--good);font-weight:700}.no{color:var(--warn);font-weight:700}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.wide{grid-column:1/-1}}@media(max-width:800px){.plan{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.plan{grid-template-columns:1fr}.grid{grid-template-columns:1fr}.wide{grid-column:span 1}.value{font-size:19px}}
 .majorbar{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:14px}.majorcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px;cursor:pointer;min-width:0}.majorcard:hover{border-color:#52698f}.majorname{font-weight:800;font-size:14px}.majorprice{font-size:19px;font-weight:800;margin:5px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.majorinfo{font-size:12px;color:var(--muted);line-height:1.5}.positionLock{display:inline-block;margin-left:8px;padding:3px 7px;border:1px solid var(--good);border-radius:999px;color:var(--good);font-size:12px}.possymbol{font-size:16px;font-weight:800;margin:6px 0 10px;color:#cfe1ff}@media(max-width:900px){.majorbar{grid-template-columns:repeat(2,1fr)}}@media(max-width:500px){.majorbar{grid-template-columns:1fr}}
@@ -329,13 +329,26 @@ html,body{max-width:100%;overflow-x:hidden}
   .v97performance{grid-template-columns:repeat(2,minmax(0,1fr))!important}
 }
 
-/* V9.41 desktop scroll + candle readability */
+/* V9.42 desktop scroll + candle readability */
 @media (min-width:701px){
   html,body{overflow-x:hidden!important;overflow-y:auto!important;height:auto!important;min-height:100%!important;overscroll-behavior:auto!important}
   body{position:static!important}
   #chart{touch-action:auto!important}
 }
-</style></head><body><header><div><h1>DATA SNIPER <span class="version-badge">V9.41</span></h1><div class="tag">高確認模式｜市場 Regime → 趨勢 → 位置 → Retest → Trigger → Risk Gate</div></div><div style="margin-left:auto;text-align:right"><div id="status" class="status">準備中</div><div id="analysisClock" class="status" style="font-size:11px;margin-top:3px">最後分析：—｜下一次K棒確認：—</div></div><div class="ds-authbar"><span id="dsCloud" class="ds-cloud">☁ 尚未登入</span><span id="dsUser" class="ds-user"></span><button id="dsLoginBtn" type="button">登入 / 註冊</button><button id="dsLogoutBtn" type="button" style="display:none">登出</button></div></header>
+
+/* V9.42 futuristic UI + actionable trade review */
+:root{--neon:#59d8ff;--neon2:#7c6cff;--good:#38e7a2;--bad:#ff5f78;--panel2:rgba(16,28,53,.86)}
+body{background:radial-gradient(circle at 15% 0%,rgba(40,91,170,.12),transparent 30%),radial-gradient(circle at 90% 18%,rgba(90,61,180,.10),transparent 28%),#070d1b}
+header{background:rgba(7,13,27,.88);backdrop-filter:blur(14px);border-bottom:1px solid rgba(89,216,255,.16)}
+.card,.panel,.v91panel,.v96panel,.holding-card{background:linear-gradient(145deg,rgba(18,31,57,.94),rgba(10,19,37,.94));border-color:rgba(104,150,224,.26);box-shadow:0 12px 32px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.025)}
+button,select,input{transition:border-color .18s,box-shadow .18s,transform .18s}button:hover{border-color:rgba(89,216,255,.55);box-shadow:0 0 0 1px rgba(89,216,255,.08),0 0 18px rgba(89,216,255,.08)}
+.version-badge{color:#91a9d7}.ds-cloud{color:var(--good)}
+#v91LongCard,#v91ShortCard{position:relative;overflow:hidden}#v91LongCard:before,#v91ShortCard:before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(transparent,var(--neon),transparent);opacity:.65}
+.v942-review-backdrop{position:fixed;inset:0;background:rgba(2,7,16,.78);backdrop-filter:blur(7px);z-index:99998;display:flex;align-items:center;justify-content:center;padding:18px}
+.v942-review{width:min(680px,100%);max-height:min(760px,88vh);overflow:auto;background:linear-gradient(155deg,#12213d,#0a1327 68%);border:1px solid rgba(89,216,255,.32);border-radius:22px;box-shadow:0 24px 80px rgba(0,0,0,.55),0 0 32px rgba(62,154,255,.09);padding:20px;color:#eaf2ff}
+.v942-review-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;border-bottom:1px solid rgba(129,166,220,.16);padding-bottom:14px;margin-bottom:14px}.v942-review-title{font-size:21px;font-weight:900}.v942-review-sub{font-size:12px;color:#8ea4c8;margin-top:4px}.v942-close{width:36px;height:36px;border-radius:12px;font-size:18px;padding:0}.v942-result{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:12px 0}.v942-stat{padding:12px;border-radius:14px;background:rgba(5,12,27,.55);border:1px solid rgba(108,148,207,.16)}.v942-stat span{display:block;font-size:11px;color:#8197bb;margin-bottom:5px}.v942-stat b{font-size:17px}.v942-good{color:var(--good)}.v942-bad{color:var(--bad)}.v942-warn{color:#ffc75d}.v942-section{margin-top:13px;padding:14px;border-radius:15px;background:rgba(7,15,31,.56);border:1px solid rgba(109,151,215,.15)}.v942-section h3{font-size:12px;letter-spacing:.08em;color:#8ca6cf;margin:0 0 8px}.v942-verdict{font-size:18px;font-weight:900;line-height:1.4}.v942-list{margin:7px 0 0;padding-left:18px;color:#c7d5ed;line-height:1.65}.v942-action{border-color:rgba(89,216,255,.26);background:linear-gradient(135deg,rgba(20,105,155,.16),rgba(56,40,130,.13))}.v942-action strong{color:#7ce4ff}.v942-tag{display:inline-flex;padding:5px 9px;border-radius:999px;background:rgba(89,216,255,.09);border:1px solid rgba(89,216,255,.18);font-size:11px;color:#a8dcff;margin:3px 5px 3px 0}
+@media(max-width:700px){.v942-review{padding:16px;border-radius:18px}.v942-result{grid-template-columns:repeat(2,1fr)}.v942-review-title{font-size:18px}}
+</style></head><body><header><div><h1>DATA SNIPER <span class="version-badge">V9.42</span></h1><div class="tag">高確認模式｜市場 Regime → 趨勢 → 位置 → Retest → Trigger → Risk Gate</div></div><div style="margin-left:auto;text-align:right"><div id="status" class="status">準備中</div><div id="analysisClock" class="status" style="font-size:11px;margin-top:3px">最後分析：—｜下一次K棒確認：—</div></div><div class="ds-authbar"><span id="dsCloud" class="ds-cloud">☁ 尚未登入</span><span id="dsUser" class="ds-user"></span><button id="dsLoginBtn" type="button">登入 / 註冊</button><button id="dsLogoutBtn" type="button" style="display:none">登出</button></div></header>
 <div class="wrap"><div class="controls" id="tradeControls"><input id="symbolSearch" placeholder="搜尋幣種，例如 TRUMP / BTC" style="width:220px" autocomplete="off">
 <div id="symbolSuggestions" hidden></div><select id="symbol" aria-label="交易幣種" title="交易幣種"><option>BTC-USDT-SWAP</option></select><select id="bar" aria-label="K線週期"><option value="5m" selected>5分鐘</option><option value="15m">15分鐘</option><option value="1H">1小時</option></select><button id="refresh">重新整理</button><button id="scan">掃描市場</button></div>
 <div id="tradeSticky" style="display:none"><span id="stickySymbol"></span><span id="stickyPrice"></span></div>
@@ -925,7 +938,7 @@ document.addEventListener('click',e=>{
 });
 const chartEl=$('chart');
 function chartPoint(e){const r=chartEl.getBoundingClientRect();return {x:(e.clientX-r.left)*(chartEl.width/r.width),y:(e.clientY-r.top)*(chartEl.height/r.height)}}
-// V9.41: desktop wheel is never intercepted by the chart; page scrolling always wins.
+// V9.42: desktop wheel is never intercepted by the chart; page scrolling always wins.
 // Chart zoom remains available through mobile pinch; desktop users can drag the chart horizontally.
 chartEl.addEventListener('mousedown',e=>{chartView.drag=true;chartView.lastX=e.clientX});
 window.addEventListener('mouseup',()=>chartView.drag=false);
@@ -1340,26 +1353,43 @@ function V96tick(){
  if(changed)V96save(a);else V96render();
 }
 function V99review(t){
- const result=(t.r||0),c=t.entryContext||{},notes=t.qualityNotes||[],issues=[];
- if((t.quality||0)<65)issues.push('進場條件完整度偏低');
- if(notes.some(x=>x.includes('追價')))issues.push('進場有追價風險');
+ const result=Number(t.r||0), notes=t.qualityNotes||[], q=Number(t.quality||0), est=Number(t.est||0);
+ const issues=[];
+ if(q<65)issues.push('進場條件完整度偏低');
+ if(notes.some(x=>x.includes('追價')))issues.push('進場位置有追價風險');
  if(notes.some(x=>x.includes('大週期尚未同向')))issues.push('大週期方向尚未確認');
- if(notes.some(x=>x.includes('Retest 尚未')))issues.push('沒有等 Retest 完成');
+ if(notes.some(x=>x.includes('Retest 尚未')))issues.push('沒有等待 Retest 完成');
+ if(notes.some(x=>x.includes('完成K')||x.includes('完成 K')))issues.push('完成 K 尚未確認');
+ if(notes.some(x=>x.includes('量能')))issues.push('量能確認不足');
  if(notes.some(x=>x.includes('R:R')&&x.includes('偏低')))issues.push('進場時風報比偏低');
- if(notes.some(x=>x.includes('TP 前')))issues.push('前方支撐/壓力空間不足');
- if(t.status==='OPEN')return {short:t.qualityVerdict||'持倉中',full:`進場評價 ${t.quality??'—'}/100。${notes.join('；')||'舊紀錄無完整快照'}`};
- if(!issues.length && (t.quality||0)>=80)return {short:'規則完整，屬正常結果',full:`結果 ${result>=0?'+':''}${result.toFixed(2)}R。進場條件與風控完整；${result<0?'本次屬策略正常虧損，不建議因單筆結果修改規則。':'本次依原規則執行有效，下一次維持同樣篩選標準。'}`};
- const main=issues[0]||'進場品質仍可改善';
- let improve='下一次等待條件更完整再進場。';
- if(main.includes('追價'))improve='下一次不要在價格已離開合理區域後追入；等待回踩、Retest 不破，再等完成 K 確認。';
- else if(main.includes('Retest'))improve='下一次突破後先等待 Retest，確認不破與完成 K，再建立交易。';
- else if(main.includes('大週期'))improve='下一次先確認 1H 方向，再用 15m 結構與 5m Trigger 找 Entry。';
- else if(main.includes('風報比')||main.includes('空間'))improve='下一次先確認前方結構空間，至少讓 TP1 有足夠 R:R，再決定是否進場。';
- return {short:`${main}｜需改善`,full:`平倉結果 ${result>=0?'+':''}${result.toFixed(2)}R。主要問題：${main}。${improve}`};
+ if(notes.some(x=>x.includes('TP 前')))issues.push('前方支撐／壓力空間不足');
+ const win=t.status==='WIN', loss=t.status==='LOSS', open=t.status==='OPEN';
+ let verdict='', repeat='';
+ if(open){verdict=q>=75?'持倉中｜進場條件相對完整':'持倉中｜進場條件仍有缺口';repeat='持續依原 SL／TP 與失效條件管理，不因短線浮盈虧任意改變風控。'}
+ else if(win&&q<65){verdict='結果獲利，但屬低品質進場';repeat='不建議把這筆 WIN 當成可複製訊號；先補足 Trigger 與風控條件。'}
+ else if(loss&&q>=75){verdict='進場品質合格，但本次屬策略虧損';repeat='可複製流程，不因單筆 LOSS 改規則；應放進同類樣本統計。'}
+ else if(win&&q>=75){verdict='進場品質良好，且結果獲利';repeat='可列入可複製樣本，後續觀察同類 setup 的勝率、EV 與 PF。'}
+ else if(loss){verdict='結果虧損，且進場條件不足';repeat='不建議重複；下一次先等待缺失條件補齊再進場。'}
+ else {verdict='結果持平｜需以進場品質判斷';repeat='不要用單筆盈虧判斷策略，保留到同類樣本統計。'}
+ let action='等待條件更完整再進場。';
+ if(issues.some(x=>x.includes('大週期')))action='先確認 1H 方向，再用 15m 結構與 5m Trigger 找 Entry。';
+ else if(issues.some(x=>x.includes('Retest')))action='突破後等待 Retest 不破，再等完成 K 確認後進場。';
+ else if(issues.some(x=>x.includes('完成 K')))action='避免在未收 K 時預判；等待完成 K 後重新確認方向與結構。';
+ else if(issues.some(x=>x.includes('量能')))action='等待量能確認；無量突破只列 WATCH，不直接 ENTRY。';
+ else if(issues.some(x=>x.includes('風報比')||x.includes('空間')))action='先確認下一個有效支撐／壓力，讓 TP1 有足夠 R:R 與正 EV 再進場。';
+ else if(issues.some(x=>x.includes('追價')))action='等待價格回到合理區域／Retest，再找完成 K Trigger，不追價。';
+ return {result,q,est,issues:[...new Set(issues)].slice(0,5),verdict,repeat,action};
 }
 function V99showReview(id){
  const t=V96load().find(x=>x.id===id);if(!t)return;const r=V99review(t);
- alert(`進場評價：${t.quality??'—'}/100\n${(t.qualityNotes||[]).join('\n')}\n\n${t.status==='OPEN'?'目前建議':'平倉檢討'}：\n${r.full}`);
+ document.getElementById('v942ReviewModal')?.remove();
+ const rr=t.entryContext?.rr??t.rr??'—', pnl=Number(t.pnlU||0), rs=Number(t.r||0);
+ const status=t.status==='OPEN'?'OPEN':t.status;
+ const issueHtml=r.issues.length?r.issues.map(x=>`<li>${x}</li>`).join(''):'<li>未偵測到主要規則缺口</li>';
+ const noteTags=(t.qualityNotes||[]).slice(0,6).map(x=>`<span class="v942-tag">${x.replace(/^⚠️?\s*/, '')}</span>`).join('');
+ const el=document.createElement('div');el.id='v942ReviewModal';el.className='v942-review-backdrop';
+ el.innerHTML=`<div class="v942-review"><div class="v942-review-head"><div><div class="v942-review-title">交易復盤｜${t.sym.replace('-USDT-SWAP','')} ${t.side}</div><div class="v942-review-sub">${t.type==='SIM'?'模擬交易':'真實交易'} · ${t.bar||'—'} · ${status}</div></div><button class="v942-close" type="button">×</button></div><div class="v942-result"><div class="v942-stat"><span>結果</span><b class="${rs>0?'v942-good':rs<0?'v942-bad':''}">${status}</b></div><div class="v942-stat"><span>損益</span><b class="${pnl>0?'v942-good':pnl<0?'v942-bad':''}">${pnl>=0?'+':''}${pnl.toFixed(2)}U</b></div><div class="v942-stat"><span>R</span><b class="${rs>0?'v942-good':rs<0?'v942-bad':''}">${rs>=0?'+':''}${rs.toFixed(2)}R</b></div><div class="v942-stat"><span>進場品質</span><b>${r.q||'—'}/100</b></div></div><div class="v942-section"><h3>進場快照</h3><div>估計勝率 <b>${r.est||'—'}%</b>　·　R:R <b>${rr}</b></div><div style="margin-top:7px">${noteTags||'<span class="v942-tag">舊紀錄無完整快照</span>'}</div></div><div class="v942-section"><h3>系統判定</h3><div class="v942-verdict">${r.verdict}</div><div style="margin-top:7px;color:#aebfda">${r.repeat}</div></div><div class="v942-section"><h3>主要缺口</h3><ul class="v942-list">${issueHtml}</ul></div><div class="v942-section v942-action"><h3>下一次怎麼做</h3><strong>${r.action}</strong></div></div>`;
+ document.body.appendChild(el);const close=()=>el.remove();el.querySelector('.v942-close').onclick=close;el.addEventListener('click',e=>{if(e.target===el)close()});
 }
 function V96render(){
  const f=V96$('v91Filter')?.value||'ALL',all=V96load(),a=all.filter(t=>f==='ALL'||t.type===f),closed=a.filter(t=>['WIN','LOSS','FLAT'].includes(t.status)),resolved=closed.filter(t=>['WIN','LOSS'].includes(t.status)),w=resolved.filter(t=>t.status==='WIN'),l=resolved.filter(t=>t.status==='LOSS'),n=resolved.length;
